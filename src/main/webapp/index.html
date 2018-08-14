@@ -9,11 +9,30 @@
 <h1>Hello, World, from HTML</h1>
 <a href="/hello">try servlet</a>
 <form action="/hello" method="post">
-    <input type="text" name="username"/>
-    <input type="password" name="pwd"/>
-    <button type="submit">Enter</button>
+    <input id="uname-txt" type="text" name="username"/>
+    <input id="upass-txt" type="password" name="pwd"/>
+    <button type="button" onclick="sayHello()">Enter</button>
 </form>
+<script>
+    function sayHello() {
+        var data = new URLSearchParams();
+        var username = document.getElementById("uname-txt").value;
+        var password = document.getElementById("upass-txt").value;
+        data.append("username", username);
+        data.append("password", password);
 
+        fetch("/hello", {
+            "method": "POST",//what method we use
+            "body": data //what params we get from form
+        }).then(function (response) {
+            return response.text();
+        }).then(function (msg) {
+            alert(msg);
+
+        });
+
+    }
+</script>
 
 </body>
 </html>
